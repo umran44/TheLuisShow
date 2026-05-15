@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Family Feud - Display</title>
+  <link rel="stylesheet" href="/css/display.css">
+</head>
+<body>
+  <div class="container">
+    <!-- Top bar with team scores -->
+    <div class="teams-bar">
+      <div class="team team1">
+        <span class="team-name" id="team1Name">Team 1</span>
+        <span class="team-score" id="team1Score">0</span>
+      </div>
+      <div class="round-counter">
+        <span>Round <span id="roundNum">1</span></span>
+      </div>
+      <div class="team team2">
+        <span class="team-name" id="team2Name">Team 2</span>
+        <span class="team-score" id="team2Score">0</span>
+      </div>
+    </div>
+
+    <!-- Question section -->
+    <div class="question-section">
+      <div id="question" class="question">
+        <p>Waiting for question...</p>
+      </div>
+    </div>
+
+    <!-- Answers grid -->
+    <div class="answers-grid" id="answersGrid">
+      <!-- Answers will be dynamically added here -->
+    </div>
+
+    <!-- Strikes display -->
+    <div class="strikes-section">
+      <div class="strikes" id="strikes">
+        <div class="strike-x">X</div>
+        <div class="strike-x">X</div>
+        <div class="strike-x">X</div>
+      </div>
+    </div>
+
+    <!-- Wrong answer indicator -->
+    <div id="wrongIndicator" class="wrong-indicator hidden">
+      <div class="x-large">✗</div>
+    </div>
+
+    <!-- Winning screen -->
+    <div id="winningScreen" class="winning-screen hidden">
+      <div class="winning-content">
+        <h1>ALL ANSWERS REVEALED!</h1>
+        <p>Great job!</p>
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/display.js"></script>
+</body>
+</html>

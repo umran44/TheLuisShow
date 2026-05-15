@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Family Feud - Host Control</title>
+  <link rel="stylesheet" href="/css/host.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Family Feud - Host Control</h1>
+
+    <!-- Game Setup Section -->
+    <div class="section">
+      <h2>Game Setup</h2>
+      <div class="setup-grid">
+        <div>
+          <label>Team 1 Name:</label>
+          <input type="text" id="team1Name" placeholder="Team 1" value="Team 1">
+          <label>Team 1 Points:</label>
+          <input type="number" id="team1Points" value="0">
+          <button onclick="updateTeam(1)">Update Team 1</button>
+        </div>
+        <div>
+          <label>Team 2 Name:</label>
+          <input type="text" id="team2Name" placeholder="Team 2" value="Team 2">
+          <label>Team 2 Points:</label>
+          <input type="number" id="team2Points" value="0">
+          <button onclick="updateTeam(2)">Update Team 2</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Questions Section -->
+    <div class="section">
+      <h2>Questions</h2>
+      <div class="questions-selector">
+        <select id="questionSelect">
+          <option value="">Select a question...</option>
+        </select>
+        <button onclick="loadQuestion()">Load Question</button>
+      </div>
+    </div>
+
+    <!-- Current Question Section -->
+    <div class="section">
+      <h2>Current Question</h2>
+      <div id="currentQuestion" class="current-question">
+        <p>No question loaded</p>
+      </div>
+    </div>
+
+    <!-- Answers Section -->
+    <div class="section">
+      <h2>Answers (Click to Reveal)</h2>
+      <div id="answersContainer" class="answers-container">
+        <!-- Answers will be populated here -->
+      </div>
+    </div>
+
+    <!-- Strike Tracker -->
+    <div class="section">
+      <h2>Strikes: <span id="strikeCount">0</span>/3</h2>
+      <div class="strike-controls">
+        <button onclick="addStrike()" class="strike-btn add">+ Strike</button>
+        <button onclick="resetStrikes()" class="strike-btn reset">Reset Strikes</button>
+      </div>
+    </div>
+
+    <!-- Round Controls -->
+    <div class="section">
+      <h2>Round Controls</h2>
+      <button onclick="resetRound()" class="control-btn">Reset Round</button>
+      <button onclick="nextRound()" class="control-btn next">Next Round</button>
+    </div>
+  </div>
+
+  <script src="/js/host.js"></script>
+</body>
+</html>

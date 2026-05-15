@@ -1,0 +1,110 @@
+[
+  {
+    "question": "Name something you might do at the beach",
+    "answers": [
+      { "text": "Swim", "frequency": 45 },
+      { "text": "Sunbathe", "frequency": 28 },
+      { "text": "Build sandcastle", "frequency": 15 },
+      { "text": "Play volleyball", "frequency": 8 },
+      { "text": "Eat ice cream", "frequency": 4 }
+    ]
+  },
+  {
+    "question": "Name a piece of furniture you'd find in a bedroom",
+    "answers": [
+      { "text": "Bed", "frequency": 87 },
+      { "text": "Dresser", "frequency": 5 },
+      { "text": "Nightstand", "frequency": 3 },
+      { "text": "Desk", "frequency": 2 },
+      { "text": "Chair", "frequency": 2 },
+      { "text": "Lamp", "frequency": 1 }
+    ]
+  },
+  {
+    "question": "Name something people do on New Year's Eve",
+    "answers": [
+      { "text": "Party", "frequency": 32 },
+      { "text": "Kiss at midnight", "frequency": 25 },
+      { "text": "Make resolutions", "frequency": 18 },
+      { "text": "Drink champagne", "frequency": 12 },
+      { "text": "Watch the ball drop", "frequency": 10 },
+      { "text": "Countdown", "frequency": 3 }
+    ]
+  },
+  {
+    "question": "Name a reason why you might not answer the phone",
+    "answers": [
+      { "text": "In the bathroom", "frequency": 28 },
+      { "text": "Sleeping", "frequency": 22 },
+      { "text": "In the shower", "frequency": 18 },
+      { "text": "Busy", "frequency": 15 },
+      { "text": "Don't know who it is", "frequency": 10 },
+      { "text": "Phone is off", "frequency": 7 }
+    ]
+  },
+  {
+    "question": "Name a popular TV game show",
+    "answers": [
+      { "text": "Jeopardy", "frequency": 35 },
+      { "text": "Wheel of Fortune", "frequency": 32 },
+      { "text": "Family Feud", "frequency": 18 },
+      { "text": "The Price is Right", "frequency": 12 },
+      { "text": "Survivor", "frequency": 3 }
+    ]
+  },
+  {
+    "question": "Name something that floats",
+    "answers": [
+      { "text": "Boat", "frequency": 30 },
+      { "text": "Wood", "frequency": 20 },
+      { "text": "Feather", "frequency": 15 },
+      { "text": "Cork", "frequency": 12 },
+      { "text": "Balloon", "frequency": 10 },
+      { "text": "Duck", "frequency": 13 }
+    ]
+  },
+  {
+    "question": "Name something you put in a sandwich",
+    "answers": [
+      { "text": "Lettuce", "frequency": 25 },
+      { "text": "Tomato", "frequency": 23 },
+      { "text": "Cheese", "frequency": 18 },
+      { "text": "Meat/Bacon", "frequency": 17 },
+      { "text": "Mustard/Mayo", "frequency": 12 },
+      { "text": "Onion", "frequency": 5 }
+    ]
+  },
+  {
+    "question": "Name something you do in the morning",
+    "answers": [
+      { "text": "Wake up", "frequency": 38 },
+      { "text": "Shower", "frequency": 22 },
+      { "text": "Eat breakfast", "frequency": 18 },
+      { "text": "Brush teeth", "frequency": 12 },
+      { "text": "Get dressed", "frequency": 8 },
+      { "text": "Check email", "frequency": 2 }
+    ]
+  },
+  {
+    "question": "Name a sport that uses a ball",
+    "answers": [
+      { "text": "Baseball", "frequency": 32 },
+      { "text": "Basketball", "frequency": 28 },
+      { "text": "Football", "frequency": 20 },
+      { "text": "Soccer", "frequency": 12 },
+      { "text": "Tennis", "frequency": 5 },
+      { "text": "Golf", "frequency": 3 }
+    ]
+  },
+  {
+    "question": "Name something cold",
+    "answers": [
+      { "text": "Ice cream", "frequency": 35 },
+      { "text": "Snow", "frequency": 25 },
+      { "text": "Ice", "frequency": 18 },
+      { "text": "Freezer", "frequency": 12 },
+      { "text": "Refrigerator", "frequency": 7 },
+      { "text": "Cold drink", "frequency": 3 }
+    ]
+  }
+]
