@@ -91,12 +91,28 @@ function renderAnswers() {
   const grid = document.getElementById('answersGrid');
   grid.innerHTML = '';
 
-  gameState.answers.forEach((answer, index) => {
+  // Determine rows needed
+  const rows = gameState.answers.length >= 9 ? 5 : 4;
+  const totalCells = rows * 2; // 2 columns
+
+  // Adjust grid rows
+  grid.style.gridTemplateRows = `repeat(${rows}, 1fr)`;
+
+  // Create cells for each position in the grid
+  for (let i = 0; i < totalCells; i++) {
     const box = document.createElement('div');
     box.className = 'answer-box';
-    box.innerHTML = `<span class="answer-number">${index + 1}</span>`;
+
+    if (i < gameState.answers.length) {
+      // Answer cell
+      box.innerHTML = `<span class="answer-number">${i + 1}</span>`;
+    } else {
+      // Empty/placeholder cell
+      box.classList.add('empty-cell');
+      box.innerHTML = '';
+    }
     grid.appendChild(box);
-  });
+  }
 }
 
 function revealAnswer(index, text, frequency) {
@@ -104,8 +120,11 @@ function revealAnswer(index, text, frequency) {
   if (boxes[index]) {
     boxes[index].classList.add('revealed');
     boxes[index].innerHTML = `
-      <span class="answer-text">${text}</span>
-      <span class="answer-frequency">${frequency}</span>
+      <span class="answer-number">${index + 1}</span>
+      <div class="answer-content">
+        <span class="answer-text">${text}</span>
+        <span class="answer-frequency">${frequency}</span>
+      </div>
     `;
   }
   gameState.revealedAnswers.push(index);

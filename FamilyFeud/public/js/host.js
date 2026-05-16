@@ -82,8 +82,11 @@ function renderAnswers() {
     const item = document.createElement('div');
     item.className = 'answer-item';
     item.innerHTML = `
-      <span class="answer-text">${answer.text}</span>
-      <span class="answer-frequency">${answer.frequency} points</span>
+      <span class="answer-number">${index + 1}</span>
+      <div class="answer-content">
+        <span class="answer-text">${answer.text}</span>
+        <span class="answer-frequency">${answer.frequency} points</span>
+      </div>
     `;
 
     if (isAnswerRevealed(index)) {
