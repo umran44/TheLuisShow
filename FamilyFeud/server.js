@@ -60,12 +60,24 @@ wss.on('connection', (ws) => {
             })),
           });
           break;
-
+        case 'resetStrikes':
+          gameState.strikes = 0;
+          broadcastToDisplay({
+            type: 'roundReset'
+          });
+          break;
+        case 'addStrike':
+          gameState.strikes++;
+          broadcastToDisplay({
+            type: 'answerWrong',
+            strikes: gameState.strikes,
+            maxStrikes: gameState.maxStrikes
+          });
+          break;
         case 'revealAnswer':
           const answerIndex = message.answerIndex;
           gameState.revealedAnswers.push(answerIndex);
           const answer = gameState.answers[answerIndex];
-
           if (answer) {
             broadcastToDisplay({
               type: 'answerRevealed',
