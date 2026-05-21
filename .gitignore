@@ -1,0 +1,5 @@
+TheChase/the-chase/node_modules/
+TheChase/backend/__pycache__
+TheChase/backend/app/__pycache__
+TheChase/backend/**/**/__pycache__
+*.cpython
