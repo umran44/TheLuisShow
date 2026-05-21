@@ -130,6 +130,10 @@ wss.on('connection', (ws) => {
           gameState.strikes = 0;
           broadcastToDisplay({ type: 'nextRound' });
           break;
+
+        case 'gameStarted':
+          broadcastToDisplay({ type: 'gameStarted' });
+          break;
       }
     } catch (error) {
       console.error('WebSocket message error:', error);

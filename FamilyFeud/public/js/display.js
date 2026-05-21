@@ -36,6 +36,10 @@ function initWebSocket() {
 
 function handleMessage(message) {
   switch (message.type) {
+    case 'gameStarted':
+      showGameContent();
+      break;
+
     case 'gameState':
       gameState = message.data;
       updateDisplay();
@@ -253,6 +257,18 @@ function playWinningMusic() {
   };
 
   playNote();
+}
+
+function showGameContent() {
+  const startingScreen = document.getElementById('startingScreen');
+  const gameContent = document.getElementById('gameContent');
+  
+  if (startingScreen) {
+    startingScreen.classList.add('hidden');
+  }
+  if (gameContent) {
+    gameContent.classList.remove('hidden');
+  }
 }
 
 // Initialize on load

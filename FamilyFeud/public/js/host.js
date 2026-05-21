@@ -2,6 +2,8 @@ let ws;
 let questions = [];
 let currentAnswers = [];
 let strikeCount = 0;
+let audioElement = null;
+let gameHasStarted = false;
 
 // Initialize WebSocket connection
 function initWebSocket() {
@@ -178,6 +180,48 @@ function nextRound() {
   document.getElementById('questionSelect').value = '';
 
   ws.send(JSON.stringify({ type: 'nextRound' }));
+}
+
+function toggleMusic() {
+  // If audio element doesn't exist, create it
+  if (!audioElement) {
+    audioElement = new Audio('/sounds/intro-song.mp3');
+    audioElement.addEventListener('ended', () => {
+      // Music ended
+    });
+  }
+
+  // Always restart the music from the beginning
+  audioElement.currentTime = 0;
+  audioElement.play().catch(error => {
+    console.error('Error playing audio:', error);
+  });
+}
+
+function startGame() {
+  gameHasStarted = true;
+
+  // Stop the music
+  if (audioElement) {
+    audioElement.pause();
+    audioElement.currentTime = 0;
+  }
+
+  // Hide starting screen and show game controls
+  const startingScreen = document.getElementById('startingScreen');
+  const gameControls = document.getElementById('gameControls');
+
+  if (startingScreen) {
+    startingScreen.classList.add('hidden');
+  }
+  if (gameControls) {
+    gameControls.classList.remove('hidden');
+  }
+
+  // Send game started message to display
+  if (ws && ws.readyState === WebSocket.OPEN) {
+    ws.send(JSON.stringify({ type: 'gameStarted' }));
+  }
 }
 
 // Initialize on load

@@ -244,3 +244,91 @@ button:active {
     flex-direction: column;
   }
 }
+
+/* Starting Screen */
+.starting-screen {
+  width: 100%;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0d3b66 0%, #000814 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+}
+
+.starting-screen.hidden {
+  display: none;
+}
+
+.starting-screen h1 {
+  font-size: 48px;
+  color: #ffd60a;
+  text-shadow: 0 0 20px rgba(255, 214, 10, 0.5);
+}
+
+.start-buttons {
+  display: flex;
+  gap: 30px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.start-btn {
+  padding: 20px 40px;
+  font-size: 24px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  background: linear-gradient(135deg, #1d5f9e 0%, #0d3b66 100%);
+  border: 3px solid #ffd60a;
+  color: white;
+  cursor: pointer;
+  min-width: 200px;
+  text-transform: uppercase;
+  font-weight: bold;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.start-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 25px rgba(255, 214, 10, 0.8);
+  background: linear-gradient(135deg, #2d7fbe 0%, #1d5f9e 100%);
+}
+
+.start-btn:active {
+  transform: scale(0.98);
+}
+
+.start-btn.music-btn {
+  background: linear-gradient(135deg, #8e44ad 0%, #6c3483 100%);
+  border-color: #bb8fce;
+}
+
+.start-btn.music-btn:hover {
+  box-shadow: 0 0 25px rgba(187, 143, 206, 0.8);
+  background: linear-gradient(135deg, #a569bd 0%, #7d4f99 100%);
+}
+
+.start-btn.start-btn-main {
+  background: linear-gradient(135deg, #27ae60 0%, #1e8449 100%);
+  border-color: #52be80;
+}
+
+.start-btn.start-btn-main:hover {
+  box-shadow: 0 0 25px rgba(82, 190, 128, 0.8);
+  background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+}
+
+/* Game Controls */
+.game-controls {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.game-controls.hidden {
+  display: none;
+}
+
+.hidden {
+  display: none;
+}

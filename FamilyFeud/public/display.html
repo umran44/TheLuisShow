@@ -8,7 +8,14 @@
 </head>
 <body>
   <div class="container">
-    <!-- Top bar with team scores -->
+    <!-- Starting Screen -->
+    <div id="startingScreen" class="starting-screen">
+      <img src="/images/family_feud_logo.png" alt="Family Feud Logo" class="logo">
+    </div>
+
+    <!-- Game Content (hidden initially) -->
+    <div id="gameContent" class="game-content hidden">
+      <!-- Top bar with team scores -->
     <div class="teams-bar">
       <div class="team team1">
         <span class="team-name" id="team1Name">Team 1</span>
@@ -49,11 +56,12 @@
       <div class="x-large">✗</div>
     </div>
 
-    <!-- Winning screen -->
-    <div id="winningScreen" class="winning-screen hidden">
-      <div class="winning-content">
-        <h1>ALL ANSWERS REVEALED!</h1>
-        <p>Great job!</p>
+      <!-- Winning screen -->
+      <div id="winningScreen" class="winning-screen hidden">
+        <div class="winning-content">
+          <h1>ALL ANSWERS REVEALED!</h1>
+          <p>Great job!</p>
+        </div>
       </div>
     </div>
   </div>
