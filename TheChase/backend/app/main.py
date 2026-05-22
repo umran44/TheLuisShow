@@ -1,33 +1,53 @@
 import os
+from contextlib import asynccontextmanager
+
 from fastapi import FastAPI, HTTPException, Request, Depends
 from fastapi.middleware.cors import CORSMiddleware
-from .questions.glen_questions import QUESTIONS as GLEN_QUESTIONS
-app = FastAPI()
+from .questions.glen_questions import QUESTIONS
 
 
-
-ROUND_TO_QUESTION_MAP = {"glen": GLEN_QUESTIONS, 'zuev': GLEN_QUESTIONS, 'vaughn': GLEN_QUESTIONS}
 QUESTIONS_BASE_PATH = 'questions'
+game_state = {
+    "curr_question_index": 0,
+    "frosh_answers": [],
+    "chaser_answers": []
+}
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    print("Starting app")
+    game_state = {}
+    game_state["curr_question_index"] = 0
+    game_state["frosh_answers"] = []
+    game_state["chaser_answers"] = []
+    yield
+    print("Closing app")
+    game_state = {}
+app = FastAPI(lifespan=lifespan)
+
 @app.get("/")
 async def root():
     return {"message": "Welcome to the chase!"}
 
-def check_answer_helper(round_name: str, question_number: int, submitted_answer: str):
-    questions = ROUND_TO_QUESTION_MAP[round_name]
-    question = questions[question_number - 1]
-    correct_ans = question["correct_answer"]
+def check_answer_helper(question_number: int, submitted_answer: str):
+    question = QUESTIONS[question_number]
+    correct_ans = QUESTIONS["correct_answer"]
     return correct_ans == submitted_answer
 
 def get_most_recent_question_and_answer(answer_list):
     return {"question_number": len(answer_list), "answer": answer_list[-1]}
 async def get_current_answers(request: Request):
     return {"frosh_answers": request.state.frosh_answers or [], "chaser_answers": request.state.chaser_answers or []}
-@app.get("/questions/{round_name}")
-async def get_questions(round_name: str):
-    questions = ROUND_TO_QUESTION_MAP.get(round_name)
-    if not questions:
-        raise HTTPException(404, detail=f'Round {round_name} does not exist')
-    return {"questions": questions}
+@app.get("/questions/")
+async def get_questions():
+    print(game_state)
+    return {"questions": QUESTIONS}
+@app.post("/set_curr_question/{idx}")
+async def set_curr_question(idx: int):
+    game_state["curr_question_index"] = idx
+
+@app.get("/get_current_question/")
+def get_curr_question():
+    return {"question": QUESTIONS[game_state["curr_question_index"]], "number": game_state["curr_question_index"]}
 
 @app.get("/check_answer/{round_name}/{question_number}/{answer}")
 async def check_answer(round_name: str, question_number: int, answer: str):
@@ -42,36 +62,29 @@ async def start_game(request: Request):
     request.state.chaser_answers = []
     return {"success": True}
 
-@app.post("/submit_answer/{round_name}/{team_name}/{question_number}/{answer}")
-async def submit_answer(
-    round_name: str, team_name: str, question_number: int, answer: str, request:Request):
+@app.post("/submit_answer/{team_name}/{answer}")
+async def submit_answer(team_name, answer):
     if team_name == "frosh":
-        request.state.frosh_answers.append(answer)
+        game_state["frosh_answers"].append(answer)
     elif team_name == "chaser":
-        request.state.chaser_answers.append(answer)
+        game_state["chaser_answers"].append(answer)
     else:
         return {"success": False}
     return {"success": True}
-# async def get_timer()
+
 @app.get("/check_answers")
 async def check_most_recent_answers(
-    round_name: str,
-    answers: dict = Depends(get_current_answers)
 ):
-    chaser_answers = answers['chaser_answers']
-    last_chaser_answer = get_most_recent_question_and_answer(chaser_answers)
-    frosh_answers = answers['frosh_answers']
-    last_frosh_answer = get_most_recent_question_and_answer(frosh_answers)
+    chaser_answers = game_state['chaser_answers']
+    frosh_answers = game_state['frosh_answers']
     return {
         "chaser": check_answer_helper(
-            round_name,
-            last_chaser_answer["question_number"],
-            last_chaser_answer["answer"]
+            game_state["curr_question_index"],
+            chaser_answers[-1]
         ),
         "frosh": check_answer_helper(
-            round_name,
-            last_frosh_answer["question_number"],
-            last_frosh_answer["answer"]
+            game_state["curr_question_index"],
+            frosh_answers[-1],
         )
     }
 

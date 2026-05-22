@@ -11,6 +11,7 @@ export type questionProps = {
     correctAnswer: string;
     showCorrectAnswer?: boolean | null;
     allowAnswering?: boolean | null;
+    setSelectedAnswer?: React.Dispatch<React.SetStateAction<string>> | null
 }
 const ALPHABET = 'ABCD';
 function getColor(correctAnswer: boolean){
@@ -22,7 +23,8 @@ function getColor(correctAnswer: boolean){
     }
 }
 export default function QuestionDisplay(params: questionProps) {
-    const {question, options, roundNumber, showCorrectAnswer, allowAnswering, correctAnswer} = params;
+    const {
+        question, options, roundNumber, showCorrectAnswer, allowAnswering, correctAnswer, setSelectedAnswer} = params;
     return (<Stack direction="column" spacing="5">
         <Box>
             <Typography variant="h3">Round {roundNumber}</Typography>
@@ -32,8 +34,9 @@ export default function QuestionDisplay(params: questionProps) {
         {options.map((option, idx) => {
             return (<Button key={option}
                 disabled={!allowAnswering}
-            sx={{padding: "1px", margin: 10,  width: "30%"}}
-            variant="contained" size="large" color={showCorrectAnswer ? getColor(correctAnswer === option) : 'primary'}
+            variant="contained" size="large"
+            color={showCorrectAnswer ? getColor(correctAnswer === option) : 'secondary'}
+            onClick={() => setSelectedAnswer ? setSelectedAnswer(option): console.log("not in contestant mode")}
             >
                 {ALPHABET[idx]}: {option}
             </Button>)

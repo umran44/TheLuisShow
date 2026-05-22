@@ -1,7 +1,7 @@
 import React from 'react';
-import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
+import Paper from '@mui/material/Paper';
 
 type scoreBoardProps = {
     froshPosition: number;
@@ -9,10 +9,10 @@ type scoreBoardProps = {
 }
 
 export default function ScoreBoard({froshPosition, chaserPosition}: scoreBoardProps){
-    return (<Box sx={{background: "white", color: "black", width: "100%"}}>
+    return (<Paper sx={{background: "white", color: "black", width: "100%"}} elevation={1}>
         <Stack direction="row" spacing={1} sx={{justifyContent: "space-evenly"}}>
             <Typography>Stackers Level: {froshPosition}</Typography>
             <Typography>Chaser Level: {chaserPosition}</Typography>
         </Stack>
-    </Box>)
+    </Paper>)
 }
