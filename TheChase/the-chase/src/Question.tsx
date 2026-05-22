@@ -8,10 +8,21 @@ export type questionProps = {
     question: string;
     options: string[];
     roundNumber: number;
+    correctAnswer: string;
+    showCorrectAnswer?: boolean | null;
+    allowAnswering?: boolean | null;
 }
-const ALPHABET = 'ABC';
+const ALPHABET = 'ABCD';
+function getColor(correctAnswer: boolean){
+    if (correctAnswer){
+        return 'success';
+    }
+    else {
+        return 'error';
+    }
+}
 export default function QuestionDisplay(params: questionProps) {
-    const {question, options, roundNumber} = params;
+    const {question, options, roundNumber, showCorrectAnswer, allowAnswering, correctAnswer} = params;
     return (<Stack direction="column" spacing="5">
         <Box>
             <Typography variant="h3">Round {roundNumber}</Typography>
@@ -20,7 +31,10 @@ export default function QuestionDisplay(params: questionProps) {
         <Stack direction="row" spacing="3" sx={{justifyContent: "space-between"}}>
         {options.map((option, idx) => {
             return (<Button key={option}
-            sx={{padding: "1px", margin: 10,  width: "30%", background: "white"}} variant="outlined" size="large">
+                disabled={!allowAnswering}
+            sx={{padding: "1px", margin: 10,  width: "30%"}}
+            variant="contained" size="large" color={showCorrectAnswer ? getColor(correctAnswer === option) : 'primary'}
+            >
                 {ALPHABET[idx]}: {option}
             </Button>)
         })}
