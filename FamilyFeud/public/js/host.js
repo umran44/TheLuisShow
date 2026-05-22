@@ -4,6 +4,10 @@ let currentAnswers = [];
 let strikeCount = 0;
 let audioElement = null;
 let gameHasStarted = false;
+let roundPoints = 0;
+let selectedTeam = 1;
+let stealInProgress = false;
+let stealingTeam = null;
 
 // Initialize WebSocket connection
 function initWebSocket() {
@@ -19,6 +23,11 @@ function initWebSocket() {
 
   ws.onerror = (error) => {
     console.error('WebSocket error:', error);
+  };
+
+  ws.onmessage = (event) => {
+    const message = JSON.parse(event.data);
+    handleHostMessage(message);
   };
 
   ws.onclose = () => {
@@ -50,6 +59,27 @@ function populateQuestionSelect() {
   });
 }
 
+function handleHostMessage(message) {
+  switch (message.type) {
+    case 'stealPhaseStarted':
+      stealInProgress = true;
+      stealingTeam = message.stealingTeam;
+      showStealStatus(stealingTeam);
+      break;
+    case 'roundReset':
+    case 'nextRound':
+      stealInProgress = false;
+      stealingTeam = null;
+      hideStealStatus();
+      break;
+    case 'roundWon':
+      stealInProgress = false;
+      stealingTeam = null;
+      hideStealStatus();
+      break;
+  }
+}
+
 function loadQuestion() {
   const select = document.getElementById('questionSelect');
   const index = parseInt(select.value);
@@ -62,6 +92,11 @@ function loadQuestion() {
   const question = questions[index];
   currentAnswers = question.answers;
   strikeCount = 0;
+  roundPoints = 0;
+  stealInProgress = false;
+  stealingTeam = null;
+  hideStealStatus();
+  selectedTeam = parseInt(document.getElementById('teamSelect').value) || 1;
 
   // Update display
   document.getElementById('currentQuestion').textContent = question.question;
@@ -73,6 +108,7 @@ function loadQuestion() {
     type: 'loadQuestion',
     question: question.question,
     answers: question.answers,
+    answeringTeam: selectedTeam,
   }));
 }
 
@@ -104,6 +140,17 @@ function renderAnswers() {
 function revealAnswer(answerIndex) {
   // Mark answer as revealed
   currentAnswers[answerIndex].revealed = true;
+  
+  // Update round points
+  roundPoints += currentAnswers[answerIndex].frequency;
+
+  // Play correct-answer sound on host
+  try {
+    const audio = new Audio('/sounds/correct-answer.mp3');
+    audio.play().catch(err => console.error('Error playing correct-answer sound:', err));
+  } catch (err) {
+    console.error('Audio playback error:', err);
+  }
 
   // Send to display
   ws.send(JSON.stringify({
@@ -140,6 +187,10 @@ function addStrike() {
 
   document.getElementById('strikeCount').textContent = strikeCount;
 
+  // Play incorrect-answer sound
+  const audio = new Audio('/sounds/incorrect-answer.mp3');
+  audio.play().catch(error => console.error('Error playing sound:', error));
+
   ws.send(JSON.stringify({
     type: 'addStrike',
     strikes: strikeCount,
@@ -162,6 +213,9 @@ function resetRound() {
     answer.revealed = false;
   });
   strikeCount = 0;
+  stealInProgress = false;
+  stealingTeam = null;
+  hideStealStatus();
 
   document.getElementById('strikeCount').textContent = strikeCount;
   renderAnswers();
@@ -173,6 +227,10 @@ function nextRound() {
   // Reset for next round
   currentAnswers = [];
   strikeCount = 0;
+  roundPoints = 0;
+  stealInProgress = false;
+  stealingTeam = null;
+  hideStealStatus();
 
   document.getElementById('strikeCount').textContent = strikeCount;
   document.getElementById('currentQuestion').textContent = 'No question loaded';
@@ -221,6 +279,35 @@ function startGame() {
   // Send game started message to display
   if (ws && ws.readyState === WebSocket.OPEN) {
     ws.send(JSON.stringify({ type: 'gameStarted' }));
+  }
+}
+
+function laughingTrack() {
+  const audio = new Audio('/sounds/clapping.mp3');
+  audio.play().catch(error => console.error('Error playing clapping sound:', error));
+}
+
+function showStealStatus(teamNum) {
+  let statusEl = document.getElementById('stealStatus');
+  if (!statusEl) {
+    statusEl = document.createElement('div');
+    statusEl.id = 'stealStatus';
+    statusEl.className = 'steal-status';
+    const section = document.querySelector('.section:nth-of-type(4)');
+    if (section) {
+      section.appendChild(statusEl);
+    } else {
+      document.body.appendChild(statusEl);
+    }
+  }
+  statusEl.textContent = `Steal attempt: Team ${teamNum} must answer correctly.`;
+  statusEl.classList.remove('hidden');
+}
+
+function hideStealStatus() {
+  const statusEl = document.getElementById('stealStatus');
+  if (statusEl) {
+    statusEl.classList.add('hidden');
   }
 }
 

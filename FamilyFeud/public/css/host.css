@@ -230,6 +230,16 @@ button:active {
   gap: 10px;
 }
 
+.steal-status {
+  margin-top: 15px;
+  padding: 12px;
+  background: #ffd60a;
+  color: #0b2342;
+  font-size: 18px;
+  font-weight: bold;
+  border-radius: 8px;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .setup-grid {

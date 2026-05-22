@@ -30,6 +30,15 @@
       <h2>Game Setup</h2>
       <div class="setup-grid">
         <div>
+          <label>Answering Team:</label>
+          <select id="teamSelect">
+            <option value="1">Team 1</option>
+            <option value="2">Team 2</option>
+          </select>
+        </div>
+      </div>
+      <div class="setup-grid">
+        <div>
           <label>Team 1 Name:</label>
           <input type="text" id="team1Name" placeholder="Team 1" value="Team 1">
           <label>Team 1 Points:</label>
@@ -80,6 +89,13 @@
         <button onclick="addStrike()" class="strike-btn add">+ Strike</button>
         <button onclick="resetStrikes()" class="strike-btn reset">Reset Strikes</button>
       </div>
+      <div id="stealStatus" class="steal-status hidden"></div>
+    </div>
+
+    <!-- Sound Effects -->
+    <div class="section">
+      <h2>Sound Effects</h2>
+      <button onclick="laughingTrack()" class="control-btn">🎵 Laughing Track</button>
     </div>
 
     <!-- Round Controls -->

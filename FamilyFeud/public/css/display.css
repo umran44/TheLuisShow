@@ -52,7 +52,7 @@ body {
 }
 
 .round-counter {
-  font-size: 24px;
+  font-size: 36px;
   font-weight: bold;
 }
 
@@ -130,7 +130,7 @@ body {
 }
 
 .answer-frequency {
-  font-size: 50px;
+  font-size: 40px;
   color: #fff;
   display: none;
   font-weight: bold;
@@ -145,7 +145,7 @@ body {
 
 .answer-text {
   display: none;
-  font-size: 50px;
+  font-size: 40px;
   flex: 1;
   text-align: center;
   text-transform: uppercase;
@@ -345,5 +345,24 @@ body {
   }
   to {
     opacity: 1;
+  }
+}
+
+@keyframes stealFlash {
+  0% {
+    opacity: 0;
+    font-size: 80px;
+  }
+  20% {
+    opacity: 1;
+    font-size: 120px;
+  }
+  80% {
+    opacity: 1;
+    font-size: 120px;
+  }
+  100% {
+    opacity: 0;
+    font-size: 80px;
   }
 }
